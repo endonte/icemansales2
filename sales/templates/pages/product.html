@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{{ category }}
+{{product_data}}
+
+<table>
+  <tr>
+    <th>
+
+    </th>
+    <th>
+
+    </th>
+  </tr>
+  {% for product in product_data %}
+    <tr>
+      <td>{{product.id}}</td>
+      <td>{{product.product_name}}</td>
+      <td>{{product.category}}</td>
+      <td>{{product.uom}}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+RANDOM TEXT HERE
+
+{% endblock %}
