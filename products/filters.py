@@ -10,7 +10,7 @@ class ProductFilter(filters.FilterSet):
         exclude = ()
 
 class ProductFilterEx(filters.FilterSet):
-    ex = filters.CharFilter(label='Ex filter', method='filter_ex')
+    ex = filters.CharFilter(label='Filter Products', method='filter_ex')
     search_fields = ['product_name', 'category__category_name', ]
 
     def filter_ex(self, qs, name, value):

@@ -9,7 +9,7 @@
 
     <div class="row">
       <form method='GET'>
-          {{ filter.form }}
+          {{ filter.form }} <br />
           <input type='submit' value='Filter' />
           |
           Displaying {{ filter.qs.count }} of {{ filter.queryset.count }} items.
@@ -24,6 +24,14 @@
       {% endif %}
     </div>
 
+  </div>
+
+  <div class="col-md-4">
+    <form action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type='submit' value='ADD PRODUCT'/>
+</form>
   </div>
 </div>
 

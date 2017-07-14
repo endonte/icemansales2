@@ -4,5 +4,5 @@ from .views import FilterExListView
 
 urlpatterns = [
     url(r'product/', views.product, name='product'),
-    url(r'^filter_ex/$', FilterExListView.as_view() ),
+    url(r'^product_list/$', FilterExListView.as_view() ),
 ]
