@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from . import views
+from .views import ProductListView
 
 urlpatterns = [
-    url(r'^$', views.ProductListView, name='product'),
+    url(r'^product/$', ProductListView.as_view(), name='product'),
 ]

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
+
 {% load querystring from django_tables2 %}
 {% load title from django_tables2 %}
 {% load trans blocktrans from i18n %}
@@ -15,14 +15,14 @@
             {% block table.thead %}
             <thead>
                 <tr>
-                    <th><a href="{% url "customer-add" %}" class="btn btn-small btn-primary dark"><span class="hidden-phone"><i class="fa fa-user-plus"></i> Add Customer</span></a>
+                    
 
                     </th>
                     <th colspan="5">
                         <form method="post" class="form-inline form-search pull-right">
                           {% csrf_token %}
                             <div>
-                              <input id="search_form_id" name="search" type="text" class="form-control col-md-3" placeholder="ID, Name, Account #, ZIP"{% if search %} value="{{ search }}"{% endif %}>
+                              <input id="search_form_id" name="search" type="text" class="form-control col-md-3" placeholder="ID, Product, Category, UOM"{% if search %} value="{{ search }}"{% endif %}>
                               <button type="submit" class="btn btn-small btn-dark"><i class="fa fa-search"></i> Search</button>
                             </div>
                         </form>
@@ -66,47 +66,7 @@
     </div>
 {% endblock table %}
 
-{% if table.page %}
-    {% block pagination %}
-        {% bootstrap_pagination table.page url=request.get_full_path %}
-    {% endblock pagination %}
-  </div>
-{% endif %}
 
-<!--
-<div class="row">
-  <div class="col-md-7" style="background-color:#FFFFFF">
-    {% render_table table %}
-  </div>
-  <div class="col-md-1">
-
-  </div>
-  <div class="col-md-4" style="background-color:#FFFFFF">
-    <form method="POST" class="post-form">{% csrf_token %}
-          {{ product_form.as_p }}
-          <button type="submit" class="save btn btn-default">Add Product</button>
-    </form>
-  </div>
-</div>
--->
-<!--
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-  {% for product in product_data %}
-    <tr>
-      <td>{{product.id}}</td>
-      <td>{{product.product_name}}</td>
-      <td>{{product.category}}</td>
-      <td>{{product.uom}}</td>
-    </tr>
-  {% endfor %}
-</table>
--->
 
 
 {% endblock %}
