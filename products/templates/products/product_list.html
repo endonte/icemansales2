@@ -7,31 +7,43 @@
 <div class="row">
   <div class="col-md-8">
 
-    <div class="row">
-      <form method='GET'>
-          {{ filter.form }} <br />
-          <input type='submit' value='Filter' />
-          |
-          Displaying {{ filter.qs.count }} of {{ filter.queryset.count }} items.
-          |
-          <a href='{{ request.path }}' >Clear</a>
-      </form>
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Filter Products</h5>
+      </div>
+      <div class="ibox-content">
+        <form method='GET'>
+            {{ filter.form }}
+            <input type='submit' value='Filter' />
+            |
+            Displaying {{ filter.qs.count }} of {{ filter.queryset.count }} items.
+            |
+            <a href='{{ request.path }}' >Clear</a>
+        </form>
+      </div>
     </div>
 
-    <div class="row">
-      {% if table %}
-          {% render_table table %}
-      {% endif %}
+    <div class="ibox-title">
+      <h5>Product List</h5>
+    </div>
+    <div class="ibox-content">
+      <div class="ibox float-e-margins">
+        {% if table %}
+            {% render_table table %}
+        {% endif %}
+      </div>
     </div>
 
   </div>
 
   <div class="col-md-4">
-    <form action="" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type='submit' value='ADD PRODUCT'/>
-</form>
+    <div class="ibox float-e-margins">
+      <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type='submit' value='ADD PRODUCT'/>
+      </form>
+    </div>
   </div>
 </div>
 

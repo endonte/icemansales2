@@ -3,6 +3,7 @@ from django.db import models
 class Category(models.Model):
     category_name = models.CharField(
         max_length=200,
+        unique=True,
         verbose_name='Category'
     )
 
@@ -13,6 +14,7 @@ class Category(models.Model):
 class Product(models.Model):
     product_name = models.CharField(
         max_length=200,
+        unique=True,
         verbose_name='Product Name'
     )
     category = models.ForeignKey('Category',
