@@ -26,3 +26,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+
+    def __unicode__(self):
+        return 'Product {} in Category {}  with UOM ({})'.format(self.product_name, self.category, self.uom)

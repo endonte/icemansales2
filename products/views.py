@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django_tables2 import RequestConfig
+from django.views.generic import TemplateView, ListView
+from django_tables2 import RequestConfig, SingleTableView
 from .forms import ProductForm
 from .models import Product
 from .tables import ProductTable
-from .filters import ProductFilter
+from .filters import ProductFilter, ProductFilterEx
 
 #def product(request):
 #    product_table = ProductTable(Product.objects.all())
@@ -32,3 +33,19 @@ def product(request):
         'filter': f,
         'product_form': product_form
         })
+
+
+class FilterExListView(ListView):
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super(FilterExListView, self).get_context_data(**kwargs)
+        filter = ProductFilterEx(self.request.GET, queryset=self.object_list)
+
+        table = ProductTable(filter.qs)
+        RequestConfig(self.request, ).configure(table )
+
+        context['filter'] = filter
+        context['table'] = table
+
+        return context

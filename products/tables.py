@@ -5,4 +5,4 @@ class ProductTable(tables.Table):
     category = tables.Column(accessor='category.category_name')
     class Meta:
         model = Product
-        attrs = {'class': 'product_table'}
+        attrs = {'class': 'table-bordered table-hover'}
