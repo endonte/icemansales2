@@ -56,8 +56,8 @@
             <li {% if request.path == '/product_list/' %} class="active" {% endif %}>
               <a class="nav-link" href="{% url 'product_list' %}"><i class="fa fa-circle-o"></i><span class="nav-label">Product List</span></a>
             </li>
-            <li>
-              <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-address-book"></i><span class="nav-label">Customer List</span></a>
+            <li{% if request.path == '/customer_list/' %} class="active" {% endif %}>
+              <a class="nav-link" href="{% url 'customer_list' %}"><i class="fa fa-address-book"></i><span class="nav-label">Customer List</span></a>
             </li>
             <li>
               <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-search"></i><span class="nav-label">Quotes</span></a>

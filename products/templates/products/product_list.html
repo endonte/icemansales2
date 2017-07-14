@@ -38,11 +38,16 @@
 
   <div class="col-md-4">
     <div class="ibox float-e-margins">
-      <form action="" method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <input type='submit' value='ADD PRODUCT'/>
-      </form>
+      <div class="ibox-title">
+        <h5>Add Product</h5>
+      </div>
+      <div class="ibox-content">
+        <form action="" method="POST">
+          {% csrf_token %}
+          {{ form }}
+          <input type='submit' value='ADD PRODUCT'/>
+        </form>
+      </div>
     </div>
   </div>
 </div>

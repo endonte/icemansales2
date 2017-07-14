@@ -4,13 +4,9 @@ from django_tables2 import SingleTableView
 from .models import Product
 import itertools
 
-class ProductFilter(filters.FilterSet):
-    class Meta:
-        model = Product
-        exclude = ()
 
 class ProductFilterEx(filters.FilterSet):
-    ex = filters.CharFilter(label='Filter Products', method='filter_ex')
+    ex = filters.CharFilter(label='Search', method='filter_ex')
     search_fields = ['product_name', 'category__category_name', ]
 
     def filter_ex(self, qs, name, value):

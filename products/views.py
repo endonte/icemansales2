@@ -6,7 +6,7 @@ from django_tables2 import RequestConfig, SingleTableView
 from .forms import ProductForm
 from .models import Product
 from .tables import ProductTable
-from .filters import ProductFilter, ProductFilterEx
+from .filters import ProductFilterEx
 
 
 class FilterExListView(ListView, ModelFormMixin):
