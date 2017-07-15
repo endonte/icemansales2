@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from . import views
+from .views import CustomerListView
 
 urlpatterns = [
-    url(r'^customer_list/$', views.customer_list, name='customer_list'),
+    url(r'^customer_list/$', CustomerListView.as_view(), name='customer_list'),
 ]

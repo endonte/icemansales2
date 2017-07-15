@@ -32,6 +32,7 @@ class Customer(models.Model):
     )
     billing_address_2 = models.CharField(
         max_length=60,
+        blank=True,
         verbose_name='Billing Address Line 2',
     )
     billing_postal = models.CharField(

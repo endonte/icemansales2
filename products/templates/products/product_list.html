@@ -42,9 +42,9 @@
         <h5>Add Product</h5>
       </div>
       <div class="ibox-content">
-        <form action="" method="POST">
+        <form action="" method="POST" role="form">
           {% csrf_token %}
-          {{ form }}
+          {{ form.as_p }}
           <input type='submit' value='ADD PRODUCT'/>
         </form>
       </div>

@@ -1,8 +1,6 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView
 from django.views.generic.edit import ModelFormMixin
-from django_tables2 import RequestConfig, SingleTableView
+from django_tables2 import RequestConfig
 from .forms import ProductForm
 from .models import Product
 from .tables import ProductTable
