@@ -50,11 +50,11 @@
             <li {% if request.path == '/' %} class="active" {% endif %}>
               <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-home"></i><span class="nav-label">Home</span></a>
             </li>
-            <li>
-              <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-plus"></i><span class="nav-label">Create Quote</span></a>
+            <li {% if request.path == '/create_quotation/' %} class="active" {% endif %}>
+              <a class="nav-link" href="{% url 'create_quotation' %}"><i class="fa fa-plus"></i><span class="nav-label">Create Quotation</span></a>
             </li>
-            <li>
-              <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-search"></i><span class="nav-label">Quotes</span></a>
+            <li {% if request.path == '/quotation_list/' %} class="active" {% endif %}>
+              <a class="nav-link" href="{% url 'quotation_list' %}"><i class="fa fa-search"></i><span class="nav-label">Quotations</span></a>
             </li>
             <li {% if request.path == '/product_list/' %} class="active" {% endif %}>
               <a class="nav-link" href="{% url 'product_list' %}"><i class="fa fa-circle-o"></i><span class="nav-label">Product List</span></a>

@@ -61,6 +61,7 @@ LOCAL_APPS = [
     # Your stuff: custom apps go here
     'products',
     'customers',
+    'quotations',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

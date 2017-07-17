@@ -67,6 +67,7 @@ class Customer(models.Model):
     lead_owned_by_date = models.DateTimeField(
         default=datetime.now,
         blank=True,
+        null=True,
     )
     customer_created_by = models.OneToOneField(
         User,
@@ -77,6 +78,7 @@ class Customer(models.Model):
     customer_created_by_date = models.DateTimeField(
         default=datetime.now,
         blank=True,
+        null=True,
     )
     customer_owned_by = models.OneToOneField(
         User,
@@ -87,6 +89,7 @@ class Customer(models.Model):
     customer_owned_by_date = models.DateTimeField(
         default=datetime.now,
         blank=True,
+        null=True,
     )
 
     def __str__(self):

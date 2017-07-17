@@ -1,5 +1,4 @@
 from django.views.generic import ListView
-from django.shortcuts import render
 from django.views.generic.edit import ModelFormMixin
 from django_tables2 import RequestConfig
 from .forms import CustomerForm, LeadForm
