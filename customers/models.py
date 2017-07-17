@@ -1,10 +1,13 @@
 from django.db import models
+from django.utils import timezone
+from sales.users.models import User
+from datetime import datetime
 
 class Customer(models.Model):
     contact = models.CharField(
         max_length=32,
         verbose_name='Customer Name',
-        help_text="Input the Attention To name here if the person is purchasing on behalf of a company or business",
+#        help_text="Input the Attention To name here if the person is purchasing on behalf of a company or business",
     )
     contact_email = models.CharField(
         max_length=200,
@@ -19,44 +22,92 @@ class Customer(models.Model):
         verbose_name='Business Registered Name',
         blank=True,
         unique=True,
-        help_text="Leave blank if no company details are provided",
+#        help_text="Leave blank if no company details are provided",
     )
     business_reg_no = models.CharField(
         max_length=10,
         verbose_name='Business Registration Number',
+        unique=True,
         blank=True,
     )
     billing_address_1 = models.CharField(
         max_length=60,
         verbose_name='Billing Address Line 1',
+        blank=True,
     )
     billing_address_2 = models.CharField(
         max_length=60,
-        blank=True,
         verbose_name='Billing Address Line 2',
+        blank=True,
     )
     billing_postal = models.CharField(
         max_length=60,
         verbose_name='Billing Postal Code',
+        blank=True,
     )
-    INDUSTRY_CHOICES = (
-        ('NON', 'Home, Office'),
-        ('FNB', 'Food and Beverage, Hotel, Restaurant'),
-        ('EVT', 'Event, Pasar Malam'),
-        ('BAR', 'Bars, Pubs, Clubs'),
-        ('IND', 'Industrial, Concrete, Manufacturing'),
-        ('MAR', 'Minimart, Supermarket'),
-        ('WTM', 'Wetmarket'),
-        ('OTR', 'Other'),
+    is_lead = models.BooleanField(
+        default=False,
     )
-    industry = models.CharField(
-        max_length=3,
-        choices=INDUSTRY_CHOICES,
-        default='NON',
+    lead_created_by = models.OneToOneField(
+        User,
+        related_name='lead_creator',
+        blank=True,
+        null=True,
     )
-
+    lead_created_by_date = models.DateTimeField(
+        default=datetime.now,
+        blank=True,
+    )
+    lead_owned_by = models.OneToOneField(
+        User,
+        related_name='lead_owner',
+        blank=True,
+        null=True,
+    )
+    lead_owned_by_date = models.DateTimeField(
+        default=datetime.now,
+        blank=True,
+    )
+    customer_created_by = models.OneToOneField(
+        User,
+        related_name='customer_creator',
+        blank=True,
+        null=True,
+    )
+    customer_created_by_date = models.DateTimeField(
+        default=datetime.now,
+        blank=True,
+    )
+    customer_owned_by = models.OneToOneField(
+        User,
+        related_name='customer_owner',
+        blank=True,
+        null=True,
+    )
+    customer_owned_by_date = models.DateTimeField(
+        default=datetime.now,
+        blank=True,
+    )
 
     def __str__(self):
         if self.business_name:
             return self.business_name
-        return self.name
+        return self.contact
+
+    def create_lead(self):
+        self.lead_created_by.add(*[request.User])
+        self.lead_created_by_date = timezone.now()
+        self.save()
+
+    def claim_lead(self):
+        #
+        self.lead_owned_by.add(*[request.User])
+        self.lead_owned_by_date = timezone.now()
+        self.save()
+
+    def create_customer(self):
+        # This method will be called when a customer has been created directly
+        # or when the customer has been converted from a lead.
+        self.customer_created_by.add(*[request.User])
+        self.customer_created_by_date = timezone.now()
+        self.save()
