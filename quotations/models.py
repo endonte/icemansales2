@@ -21,8 +21,7 @@ class Quote(models.Model):
         max_length=60,
         verbose_name='Shipping Postal',
     )
-    created_by = models.OneToOneField(User,
-        related_name='created_by',
+    created_by = models.ForeignKey(User,
         verbose_name='Created By',
     )
     created_date = models.DateTimeField(
@@ -34,6 +33,12 @@ class Quote(models.Model):
     quote_gst = models.BooleanField(
         default=False,
     )
+    is_confirmed = models.BooleanField(
+        default=False,
+    )
+
+    def __str__(self):
+        return 'QuoteID: {} Customer:'.format(self.id, self.customer_name)
 
 class Quote_Products(models.Model):
     quote_id = models.ForeignKey('Quote',
@@ -44,11 +49,13 @@ class Quote_Products(models.Model):
         verbose_name='Product Name',
         on_delete=models.CASCADE,
     )
-    product_price = models.PositiveIntegerField(
+    product_price = models.DecimalField(
         verbose_name='Price',
-        max_length=10,
+        max_digits=20,
+        decimal_places=2,
     )
-    product_description = models.TextField(
+    product_description = models.CharField(
         verbose_name='Product Description',
-        max_length=300,
+        max_length=200,
+        blank=True,
     )

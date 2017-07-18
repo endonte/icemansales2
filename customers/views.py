@@ -26,6 +26,7 @@ class CustomerListView(ListView, ModelFormMixin):
 
         if self.form.is_valid():
             self.object = self.form.save()
+            self.object.save()
             self.form = self.get_form(self.form_class)
             # Here you may consider creating a new instance of form_class(),
             # so that the form will come clean.

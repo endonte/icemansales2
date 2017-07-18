@@ -21,13 +21,11 @@ class Customer(models.Model):
         max_length=60,
         verbose_name='Business Registered Name',
         blank=True,
-        unique=True,
 #        help_text="Leave blank if no company details are provided",
     )
     business_reg_no = models.CharField(
         max_length=10,
         verbose_name='Business Registration Number',
-        unique=True,
         blank=True,
     )
     billing_address_1 = models.CharField(

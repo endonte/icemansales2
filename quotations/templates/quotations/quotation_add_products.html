@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if quote_pk %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Quote Details</h5>
+        <span class="label label-primary pull-right"><h5>QUOTATION ID: {{quote_pk.id}}</h6></span>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-xs-4">
+            <strong>Customer Details:</strong><br />
+            Attention To: {{quote_pk.customer_name.contact}} <br />
+            {% if quote_pk.customer_name.business_name %}
+              Company: {{quote_pk.customer_name.business_name}} <br />
+            {% endif %}
+            {% if quote_pk.customer_name.business_reg_no %}
+              Company Registration No.: {{quote_pk.customer_name.business_reg_no}}
+            {% endif %}
+          </div>
+          <div class="col-xs-4">
+            <strong>Business Address:</strong><br />
+            {% if quote_pk.customer_name.billing_address_1 %}
+              {{quote_pk.customer_name.billing_address_1}} <br />
+              {% if quote_pk.customer_name.billing_address_2 %}
+                {{quote_pk.customer_name.billing_address_2}} <br />
+              {% endif %}
+              {{quote_pk.customer_name.billing_postal}} <br />
+            {% else %}
+              No Billing Details Supplied
+            {% endif %}
+          </div>
+          <div class="col-xs-4">
+            <strong>Shipping Address:</strong><br />
+            {{quote_pk.shipping_address1}} <br />
+            {% if quote_pk.shipping_address2 %}
+              {{quote_pk.shipping_address2}} <br />
+            {% endif %}
+            {{quote_pk.shipping_postal}} <br />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Add Product Line Items</h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <form action="" method="POST" role="form">
+            {% csrf_token %}
+
+              {{ form.as_table }}
+
+            <input type='submit' value='ADD PRODUCT'/>
+          </form>
+        </div>
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>UOM</th>
+                  <th>Price</th>
+                  <th>Additional Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for object in quote_products %}
+                  <tr>
+                    <td>{{object.product_name}}</td>
+                    <td>{{object.product_name.uom}}</td>
+                    <td>$ {{object.product_price}}</td>
+                    <td style="width: 300px;">{{object.product_description}}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+Quote does not exist
+{% endif %}
+
+{% endblock %}
