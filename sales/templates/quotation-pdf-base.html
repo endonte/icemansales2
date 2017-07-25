@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  p { margin: 0; -pdf-keep-with-next: true; font-size: 10pt; }
+  th {border-bottom: 1pt solid black;}
+  hr {margin: 0.5;}
+  p.separator { -pdf-keep-with-next: false; font-size: 6pt; }
+  td, th {font-size: 10pt; }
+  @page {
+    size: a4 portrait;
+    @frame header_frame1 {           /* Static Frame */
+      -pdf-frame-content: header_content1;
+      left: 2cm; width: 3cm; top: 2cm; height: 2.5cm;
+    }
+    @frame header_frame2{
+      -pdf-frame-content: header_content2;
+      left: 5.2cm; width: 8.8cm; top: 2.1cm; height: 5cm;
+    }
+    @frame header_frame5{
+      -pdf-frame-content: header_content5;
+      left: 2cm; width: 8.8cm; top: 4.5cm; height: 4.1cm;
+    }
+    @frame header_quote{
+      -pdf-frame-content: header_quote;
+      left: 14cm; width: 2.5cm; top: 2.1cm; height: 1.5cm;
+    }
+    @frame header_frame3{
+      -pdf-frame-content: header_content3;
+      left: 14cm; width: 2.5cm; top: 2.8cm; height: 2.5cm;
+    }
+    @frame header_frame4{
+      -pdf-frame-content: header_content4;
+      left: 16.5cm; width: 2.5cm; top: 2.8cm; height: 2.5cm;
+    }
+    @frame customer_details{
+      -pdf-frame-content: customer_details;
+      left: 2cm; width: 5.67cm; top: 6.8cm; height: 3.8cm;
+      -pdf-frame-border: 1;
+    }
+    @frame billing_details{
+      -pdf-frame-content: billing_details;
+      left: 7.67cm; width: 5.67cm; top: 6.8cm; height: 3.8cm;
+      -pdf-frame-border: 1;
+    }
+    @frame shipping_details{
+      -pdf-frame-content: shipping_details;
+      left: 13.34cm; width: 5.67cm; top: 6.8cm; height: 3.8cm;
+      -pdf-frame-border: 1;
+    }
+    @frame content_frame {          /* Content Frame */
+      left: 2cm; width: 17cm; top: 10.8cm; height: 13.2cm;
+      -pdf-frame-border: 1;
+    }
+    @frame creator_frame {
+      -pdf-frame-content: creator_content;
+      left: 2cm; width: 6.5cm; top: 25.5cm; height: 3cm;
+    }
+    @frame creator_frame_text{
+      -pdf-frame-content: creator_content_text;
+      left: 2cm; width: 6.5cm; top: 26.2cm; height: 1cm; text-align: center;
+    }
+    @frame signatory_frame_text{
+      -pdf-frame-content: signatory_content_text;
+      left: 12.5cm; width: 6.5cm; top: 26.2cm; height: 1cm;
+    }
+    @frame footer_frame {           /* Another static Frame */
+      -pdf-frame-content: footer_content;
+      left: 2cm; width: 17cm; top: 27.2cm; height: 0.5cm;
+    }
+  }
+</style>
+</head>
+<body>
+  <!-- Content for Static Frame 'header_frame' -->
+  <div id="header_content1">
+    <img src="sales/static/images/quotationlogo.png" />
+  </div>
+  <div id="header_content2">
+    <p style="font-size: 12pt">
+      <strong>UNI-TAT ICE & MARKETING P/L</strong>
+    </p>
+    <p style="font-size: 8pt">
+      Reg No.: 199406736C
+    </p>
+    <p style="font-size: 8pt">
+      51 Ubi Avenue 1, #01-26 Paya Ubi
+    </p>
+    <p style="font-size: 8pt">
+      Industrial Park, Singapore 408933
+    </p>
+    <p style="font-size: 8pt">
+      T: 65 6744 8484 Fax: 65 6744 5088
+    </p>
+    <p style="font-size: 8pt">
+      E-mail: cs@iceman.com.sg
+    </p>
+  </div>
+  <div id="header_quote">
+    <p style="font-size:12pt">
+      <strong>QUOTATION</strong>
+    </p>
+
+  </div>
+  <div id="header_content3">
+    <p>
+      Quote ID:
+    </p>
+    <p>
+      Creation Date:
+    </p>
+  </div>
+  <div id="header_content4">
+    <p>
+      {{quote_pk.id}}
+    </p>
+    <p>
+      {{quote_pk.created_date.date}}
+    </p>
+  </div>
+<!--  <div id="header_content5">
+    <p>
+      Tel: 6744 8484
+    </p>
+    <p>
+      Fax: 6744 5088
+    </p>
+    <p>
+      E: cs@iceman.com.sg
+    </p>
+    <p>
+      Website: Iceman.com.sg
+    </p>
+    <p>
+      Shop: Polarmart.com.sg
+    </p>
+    <p>
+      Fb: Facebook.com/SGIceman
+    </p>
+  </div>-->
+  <div id="customer_details">
+    <p>
+      <strong>Customer Details:</strong>
+    </p>
+    <p>
+      {{quote_pk.customer_name}}
+    </p>
+    {% if quote_pk.customer_name.business_reg_no %}
+      <p>
+        {{quote_pk.customer_name.business_reg_no}}
+      </p>
+    {% endif %}
+    <p>
+      {{quote_pk.customer_name.contact_num}}
+    </p>
+    <p>
+      {{quote_pk.customer_name.contact_email}}
+    </p>
+  </div>
+  <div id="billing_details">
+    <p>
+      <strong>Billing Details:</strong>
+    </p>
+    {% if quote_pk.customer_name.billing_address_1 %}
+      <p>
+        {{quote_pk.customer_name.billing_address_1}}
+      </p>
+      {% if quote_pk.customer_name.billing_address_2 %}
+        <p>
+          {{quote_pk.customer_name.billing_address_2}}
+        </p>
+      {% endif %}
+      <p>
+        {{quote_pk.customer_name.billing_postal}}
+      </p>
+    {% endif %}
+  </div>
+  <div id="shipping_details">
+    <p>
+      <strong>Shipping Details:</strong>
+    </p>
+    <p>
+      {{quote_pk.shipping_address1}}
+    </p>
+    {% if quote_pk.shipping_address2 %}
+      <p>
+        {{quote_pk.shipping_address2}}
+      </p>
+    {% endif %}
+    <p>
+      {{quote_pk.shipping_postal}}
+    </p>
+  </div>
+  <!-- Content for signing and showing the quotation creator -->
+  <div id="creator_content">
+    <p>
+      {{quote_pk.created_by.name}}
+    </p>
+  </div>
+  <div id="creator_content_text">
+    <hr />
+    <p>
+      Created By:
+    </p>
+  </div>
+  <div id="signatory_content_text">
+    <hr />
+    <p>
+      Signed By:
+    </p>
+  </div>
+  <!-- Content for Static Frame 'footer_frame' -->
+  <div id="footer_content">
+    page <pdf:pagenumber>
+    of <pdf:pagecount>
+  </div>
+  <!-- HTML Content -->
+  {% block content %}
+  {% endblock %}
+
+
+</body>
+</html>

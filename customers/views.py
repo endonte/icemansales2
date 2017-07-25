@@ -1,6 +1,8 @@
 from django.views.generic import ListView
 from django.views.generic.edit import ModelFormMixin
 from django_tables2 import RequestConfig
+from django.utils import timezone
+from sales.users.models import User
 from .forms import CustomerForm, LeadForm
 from .models import Customer
 
@@ -25,7 +27,9 @@ class CustomerListView(ListView, ModelFormMixin):
         self.form = self.get_form(self.form_class)
 
         if self.form.is_valid():
-            self.object = self.form.save()
+            self.object = self.form.save(commit=False)
+            self.object.customer_created_by = request.user
+            self.object.customer_created_by_date = timezone.now()
             self.object.save()
             self.form = self.get_form(self.form_class)
             # Here you may consider creating a new instance of form_class(),
@@ -37,6 +41,7 @@ class CustomerListView(ListView, ModelFormMixin):
     def get_context_data(self, *args, **kwargs):
         context = super(CustomerListView, self).get_context_data(*args, **kwargs)
 
+        context['customers'] = Customer.objects.all()
         context['form'] = self.form
 
         return context

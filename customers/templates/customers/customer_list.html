@@ -1,4 +1,28 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load staticfiles %}
+
+{% block css %}
+
+{{ block.super }}
+<link href="{% static 'css/plugins/footable/footable.core.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+
+{{ block.super }}
+
+<script src="{% static 'js/plugins/footable/footable.all.min.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+
+    });
+
+</script>
+
+{% endblock javascript %}
 
 {% block content %}
 <div class="row">
@@ -20,7 +44,47 @@
           <h5>Customer List</h5>
         </div>
         <div class="ibox-content">
-
+          <table class="footable table table-stripped toggle-arrow-tiny">
+            <thead>
+              <tr>
+                <th data-toggle="true">Customer</th>
+                <th data-hide="all">Contact</th>
+                <th>E-mail</th>
+                <th>Phone Number</th>
+                <th data-hide="all">Business Registration Number</th>
+                <th data-hide="all">Billing Address 1</th>
+                <th data-hide="all">Billing Address 2</th>
+                <th data-hide="all">Billing Postal</th>
+                <th data-hide="all">Created By</th>
+                <th>Owned By</th>
+                <th>View Quotation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for customer in customers %}
+              <tr>
+                <td>{{customer}}</td>
+                <td>{{customer.contact}}</td>
+                <td>{{customer.contact_email}}</td>
+                <td>{{customer.contact_num}}</td>
+                <td>{{customer.business_reg_no}}</td>
+                <td>{{customer.billing_address_1}}</td>
+                <td>{{customer.billing_address_2}}</td>
+                <td>{{customer.billing_postal}}</td>
+                <td>{{customer.customer_created_by.name}}</td>
+                <td>{{customer.customer_owned_by.name}}</td>
+                <td><i class="fa fa-eye"></i></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <ul class="pagination pull-right"></ul>
+                </td>
+            </tr>
+            </tfoot>
+          </table>
         </div>
       </div>
     </div>

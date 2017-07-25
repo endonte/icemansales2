@@ -1,0 +1,50 @@
+{% extends "quotation-pdf-base.html" %}<!DOCTYPE html>
+{% block content %}
+  <!-- HTML Content -->
+<table cellpadding="5">
+  <tr>
+    <th width="25" align="left">
+      #
+    </th>
+    <th align="left">
+      Item Name
+    </th>
+    <th width="80" align="left">
+      Price
+    </th>
+    <th width="80" align="left">
+      UOM
+    </th>
+  </tr>
+  {% for item in quote_products %}
+    <tr>
+      <td>
+        {{forloop.counter}}
+      </td>
+      <td>
+        {{item.product_name}}
+      </td>
+      <td>
+        $ {{item.product_price}}
+      </td>
+      <td>
+        {{item.product_name.uom}}
+      </td>
+    </tr>
+
+    {% if item.product_description %}
+      <tr>
+        <td>
+        </td>
+        <td colspan="2">
+          {{item.product_description}}
+        </td>
+
+      </tr>
+    {% endif %}
+
+
+  {% endfor %}
+
+{% endblock %}
+</table>

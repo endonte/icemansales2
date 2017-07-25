@@ -6,7 +6,7 @@ from datetime import datetime
 class Customer(models.Model):
     contact = models.CharField(
         max_length=32,
-        verbose_name='Customer Name',
+        verbose_name='Contact Name',
 #        help_text="Input the Attention To name here if the person is purchasing on behalf of a company or business",
     )
     contact_email = models.CharField(
@@ -46,8 +46,9 @@ class Customer(models.Model):
     is_lead = models.BooleanField(
         default=False,
     )
-    lead_created_by = models.OneToOneField(
+    lead_created_by = models.ForeignKey(
         User,
+        verbose_name='Lead Created By',
         related_name='lead_creator',
         blank=True,
         null=True,
@@ -56,8 +57,9 @@ class Customer(models.Model):
         default=datetime.now,
         blank=True,
     )
-    lead_owned_by = models.OneToOneField(
+    lead_owned_by = models.ForeignKey(
         User,
+        verbose_name='Lead Owned By',
         related_name='lead_owner',
         blank=True,
         null=True,
@@ -67,8 +69,9 @@ class Customer(models.Model):
         blank=True,
         null=True,
     )
-    customer_created_by = models.OneToOneField(
+    customer_created_by = models.ForeignKey(
         User,
+        verbose_name='Customer Created By',
         related_name='customer_creator',
         blank=True,
         null=True,
@@ -78,8 +81,9 @@ class Customer(models.Model):
         blank=True,
         null=True,
     )
-    customer_owned_by = models.OneToOneField(
+    customer_owned_by = models.ForeignKey(
         User,
+        verbose_name='Customer Owned By',
         related_name='customer_owner',
         blank=True,
         null=True,

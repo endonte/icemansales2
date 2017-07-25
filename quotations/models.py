@@ -5,7 +5,7 @@ from datetime import datetime
 
 class Quote(models.Model):
     customer_name = models.ForeignKey('customers.Customer',
-        verbose_name='Customer Name',
+        verbose_name='Contact Name',
         on_delete=models.CASCADE,
     )
     shipping_address1 = models.CharField(
@@ -35,6 +35,17 @@ class Quote(models.Model):
     )
     is_confirmed = models.BooleanField(
         default=False,
+    )
+    TEMPLATE_CHOICES = (
+        ('T1','Template 1: GST Excluded, Quantity Required'),
+        ('T2','Template 2: GST Included, Quantity Required'),
+        ('T3','Template 3: GST Excluded, Quantity Not Required'),
+        ('T4','Template 4: GST Included, Quantity Not Required'),
+    )
+    template_type = models.CharField(
+        max_length=2,
+        choices=TEMPLATE_CHOICES,
+        default='T3'
     )
 
     def __str__(self):

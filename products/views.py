@@ -1,5 +1,6 @@
 from django.views.generic import ListView
 from django.views.generic.edit import ModelFormMixin
+from django.shortcuts import redirect
 from django_tables2 import RequestConfig
 from .forms import ProductForm
 from .models import Product
@@ -25,10 +26,7 @@ class FilterExListView(ListView, ModelFormMixin):
         if self.form.is_valid():
             self.object = self.form.save()
             self.form = self.get_form(self.form_class)
-            # Here ou may consider creating a new instance of form_class(),
-            # so that the form will come clean.
 
-        # Whether the form validates or not, the view will be rendered by get()
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):

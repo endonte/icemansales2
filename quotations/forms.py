@@ -11,7 +11,11 @@ class QuoteForm(forms.ModelForm):
                 'shipping_postal',
                 'quote_total',
                 'quote_gst',
+                'template_type',
             )
+        #widgets = {
+        #    'template_type': RadioSelect,
+        #}
 
 class QuoteProductForm(forms.ModelForm):
     class Meta:
@@ -21,3 +25,8 @@ class QuoteProductForm(forms.ModelForm):
                 'product_price',
                 'product_description',
         )
+
+class LockQuoteForm(forms.ModelForm):
+    class Meta:
+        model = Quote
+        fields = ('is_confirmed',)

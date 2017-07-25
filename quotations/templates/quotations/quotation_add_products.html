@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if quote_pk %}
 <div class="row">
   <div class="col-lg-12">
     <div class="ibox float-e-margins">
@@ -55,7 +54,7 @@
       </div>
       <div class="ibox-content">
         <div class="row">
-          <form action="" method="POST" role="form">
+          <form action="" method="POST">
             {% csrf_token %}
 
               {{ form.as_table }}
@@ -72,6 +71,7 @@
                   <th>UOM</th>
                   <th>Price</th>
                   <th>Additional Details</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,19 +80,23 @@
                     <td>{{object.product_name}}</td>
                     <td>{{object.product_name.uom}}</td>
                     <td>$ {{object.product_price}}</td>
-                    <td style="width: 300px;">{{object.product_description}}</td>
+                    <td style="width: 500px;">{{object.product_description}}</td>
+                    <td><i class="fa fa-fw fa-trash"></i>
+                        <i class="fa fa-fw fa-pencil"></i></td>
                   </tr>
                 {% endfor %}
               </tbody>
             </table>
+          </div>
+          <div>
+            <a href="{% url 'quotation_template_1' quote_pk.id %}">
+              <button type="button" class="btn btn-large btn-primary pull-right"><i class="fa fa-check"></i> CONFIRM QUOTE</button>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-{% else %}
-Quote does not exist
-{% endif %}
 
 {% endblock %}

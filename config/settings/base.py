@@ -52,7 +52,6 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     'django_tables2', # table
     'django_filters', # table filter
-
 ]
 
 # Apps specific for this project go here.

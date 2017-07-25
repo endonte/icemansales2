@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Quotation Header -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox flat-e-margins">
+      <div class="ibox-title">
+        <h5>QUOTE ACTIONS:</h5>
+      </div>
+      <div class="ibox-content">
+
+        <i class="fa fa-2x fa-fw fa-print"></i>
+        <a href="{% url 'pdf_printer' quote_pk.id %}">
+          <i class="fa fa-2x fa-fw fa-file-pdf-o"></i>
+        </a>
+        <i class="fa fa-2x fa-fw fa-envelope-o"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+<!-- For Quote Creation Company Details -->
+  <div class="col-lg-3">
+    <div class="ibox flat-e-margins">
+      <div class="ibox-title">
+        Quoting Company Details
+      </div>
+      <div class="ibox-content">
+        Uni-Tat Ice & Marketing Pte Ltd<br />
+        51 Ubi Avenue 1<br />
+        #01-26 Paya Ubi Industrial Park <br />
+        Singapore 408933<br />
+        T: 6744 8484 F: 6744 5088<br />
+        E: cs@iceman.com.sg<br />
+        W: Iceman.com.sg<br />
+        E: Polarmart.com.sg<br />
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="ibox flat-e-margins">
+      <div class="ibox-title">
+        Quote Reference
+      </div>
+      <div class="ibox-content">
+        Quote ID: <span class="pull-right">{{quote_pk.id}}</span><br />
+        Creation Date: <span class="pull-right">{{quote_pk.created_date.date}}</span><br />
+        Created By: <span class="pull-right">{{quote_pk.created_by.name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="ibox flat-e-margins">
+      <div class="ibox-title">
+        Customer Billing Details
+      </div>
+      <div class="ibox-content">
+        {% if quote_pk.customer_name.billing_address_1 %}
+          {{quote_pk.customer_name.billing_address_1}} <br />
+          {% if quote_pk.customer_name.billing_address_2 %}
+            {{quote_pk.customer_name.billing_address_2}} <br />
+          {% endif %}
+          S({{quote_pk.customer_name.billing_postal}}) <br />
+        {% else %}
+          No Billing Details Supplied
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="ibox flat-e-margins">
+      <div class="ibox-title">
+        Shipping Details
+      </div>
+      <div class="ibox-content">
+        {{quote_pk.shipping_address1}} <br />
+        {% if quote_pk.shipping_address2 %}
+          {{quote_pk.shipping_address2}} <br />
+        {% endif %}
+        S({{quote_pk.shipping_postal}}) <br />
+      </div>
+    </div>
+  </div>
+<!-- For Quote ID and Quote Creation Date -->
+
+</div>
+<!-- For Customer Details -->
+<div class="row">
+
+</div>
+<!-- For Product Details -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox flat-e-margins">
+      <div class="ibox-content">
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Product Name</th>
+                  <th>UOM</th>
+                  <th>Price</th>
+                  <th>Additional Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for object in quote_products %}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{object.product_name}}</td>
+                    <td>{{object.product_name.uom}}</td>
+                    <td>$ {{object.product_price}}</td>
+                    <td style="width: 500px;">{{object.product_description}}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- For Created By -->
+<div class="row">
+  <div class="col-lg-3">
+    <div class="ibox flat-e-margins">
+      <div class="ibox-title">
+        Created By:<br />
+      </div>
+      <div class="ibox-content">
+        <span>{{quote_pk.created_by.name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    
+  </div>
+  <div class="col-lg-3">
+
+  </div>
+  <div class="col-lg-3">
+
+  </div>
+</div>
+{% endblock %}
