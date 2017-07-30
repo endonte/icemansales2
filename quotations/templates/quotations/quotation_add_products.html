@@ -1,6 +1,35 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load staticfiles %}
+
+{% block css %}
+
+{{ block.super }}
+<link href="{% static 'css/plugins/footable/footable.core.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+
+{{ block.super }}
+
+<script src="{% static 'js/plugins/footable/footable.all.min.js' %}"></script>
+
+{% endblock %}
 
 {% block content %}
+{% if quote_pk.is_confirmed == True %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Quotation Status: LOCKED</h5>
+      </div>
+      <div class="ibox-content">
+        Quote has been confirmed. Editing and adding products is no longer possible. Please create a new quotation.
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 <div class="row">
   <div class="col-lg-12">
     <div class="ibox float-e-margins">
@@ -59,17 +88,22 @@
 
               {{ form.as_table }}
 
-            <input type='submit' value='ADD PRODUCT'/>
+            <input type='submit' value='ADD PRODUCT' name='button_add_product'/>
           </form>
         </div>
         <div class="row">
           <div class="table-responsive">
-            <table class="table">
+            <table class="footable table table-stripped toggle-arrow-tiny"
+              data-page-size="5">
               <thead>
                 <tr>
                   <th>Product Name</th>
                   <th>UOM</th>
                   <th>Price</th>
+                  {% if quote_pk.template_type == 'T1' or quote_pk.template_type == 'T2' %}
+                    <th>Quantity</th>
+                    <th>Line Total</th>
+                  {% endif %}
                   <th>Additional Details</th>
                   <th>Edit</th>
                 </tr>
@@ -80,18 +114,42 @@
                     <td>{{object.product_name}}</td>
                     <td>{{object.product_name.uom}}</td>
                     <td>$ {{object.product_price}}</td>
+                    {% if quote_pk.template_type == 'T1' or quote_pk.template_type == 'T2' %}
+                      <td>{{object.product_quantity}}</td>
+                      <td>$ {{object.product_line_total}}</td>
+                    {% endif %}
                     <td style="width: 500px;">{{object.product_description}}</td>
-                    <td><i class="fa fa-fw fa-trash"></i>
-                        <i class="fa fa-fw fa-pencil"></i></td>
+                    <td>
+                      <!--<form action="" method="POST">
+                        {% csrf_token %}
+                        <input type='hidden' value='{{object.id}}' name='line_item_id' />
+                        <input type='submit' value='Delete {{object.id}}' name='button_delete_product'/>
+                      </form>-->
+                      <i class="fa fa-fw fa-trash"></i>
+                      <i class="fa fa-fw fa-pencil"></i>
+                    </td>
                   </tr>
                 {% endfor %}
               </tbody>
+              <tfoot>
+              <tr>
+                  <td colspan="5">
+                      <ul class="pagination pull-right"></ul>
+                  </td>
+              </tr>
+              </tfoot>
+
             </table>
           </div>
           <div>
-            <a href="{% url 'quotation_template_1' quote_pk.id %}">
-              <button type="button" class="btn btn-large btn-primary pull-right"><i class="fa fa-check"></i> CONFIRM QUOTE</button>
+            {% if quote_products and quote_pk.is_confirmed == False %}
+            <a href="{% url 'quotation_template' quote_pk.id %}">
+              <button type="button" class="btn btn-large btn-primary pull-right">
+                <i class="fa fa-check"></i>
+                CONFIRM QUOTE
+              </button>
             </a>
+            {% endif %}
           </div>
         </div>
       </div>

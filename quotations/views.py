@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.http import HttpResponseRedirect, HttpResponse
 from sales.users.models import User
 from .models import Quote, Quote_Products
-from .forms import QuoteForm, QuoteProductForm
+from .forms import QuoteForm, QuoteProductForm1, QuoteProductForm2
 from reportlab.pdfgen import canvas
 from .utils import render_to_pdf
 
@@ -48,23 +48,40 @@ class QuotationList(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(QuotationList, self).get_context_data(*args, **kwargs)
 
+        context['quote_pk'] = Quote.objects.all()
+
+        return context
+
 class QuotationAddProduct(ListView, ModelFormMixin):
     model = Quote_Products
-    form_class = QuoteProductForm
+    form_class = QuoteProductForm1
     template_name='quotations/quotation_add_products.html'
+
+    def form_type(self, *args, **kwargs):
+        quote_id = Quote.objects.get(pk=self.kwargs['pk'])
+        template = quote_id.template_type
+        if template == 'T3' or template == 'T4':
+            self.form_class = QuoteProductForm1
+        elif template == 'T1' or template == 'T2':
+            self.form_class = QuoteProductForm2
 
     def get(self, request, *args, **kwargs):
         self.object = None
+        self.form_type(Quote.objects.get(pk=self.kwargs['pk']))
         self.form = self.get_form(self.form_class)
         return ListView.get(self, request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = None
+        self.form_type(Quote.objects.get(pk=self.kwargs['pk']))
         self.form = self.get_form(self.form_class)
 
         if self.form.is_valid():
             self.object = self.form.save(commit=False)
             self.object.quote_id = Quote.objects.get(pk=self.kwargs['pk'])
+            if self.object.product_quantity:
+                self.object.product_line_total = self.object.product_quantity * self.object.product_price
+
             self.object.save()
 
         return self.get(request, *args, **kwargs)
@@ -80,12 +97,13 @@ class QuotationAddProduct(ListView, ModelFormMixin):
 
         return context
 
-class QuotationTemplate1(ListView):
+
+class QuotationTemplate(ListView):
     model = Quote_Products
-    template_name = 'quotations/quotation_template1.html'
+    template_name = 'quotations/quotation_template.html'
 
     def get_context_data(self, *args, **kwargs):
-        context = super(QuotationTemplate1, self).get_context_data(*args, **kwargs)
+        context = super(QuotationTemplate, self).get_context_data(*args, **kwargs)
 
         context['quote_pk'] = Quote.objects.get(pk=self.kwargs['pk'])
         context['quote_products'] = Quote_Products.objects.filter(
@@ -104,4 +122,11 @@ class PrintView(View):
                     ),
         }
         pdf = render_to_pdf('quotations/pdf/quotation-pdf-1.html', data)
+        instance = Quote.objects.get(pk=self.kwargs['pk'])
+        if instance.template_type == 'T1':
+            pdf = render_to_pdf('quotations/pdf/quotation-pdf-1.html', data)
+        elif instance.template_type == 'T2':
+            pdf = render_to_pdf('quotations/pdf/quotation-pdf-2.html', data)
+        elif instance.template_type == 'T4':
+            pdf = render_to_pdf('quotations/pdf/quotation-pdf-4.html', data)
         return HttpResponse(pdf, content_type='application/pdf')

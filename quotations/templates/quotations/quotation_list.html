@@ -1,1 +1,89 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load staticfiles %}
+
+{% block css %}
+
+{{ block.super }}
+<link href="{% static 'css/plugins/footable/footable.core.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+
+{{ block.super }}
+
+<script src="{% static 'js/plugins/footable/footable.all.min.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+
+    });
+
+</script>
+
+{% endblock javascript %}
+
+{% block content %}
+<div class="row">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h5>Quotation List</h5>
+    </div>
+    <div class="ibox-content">
+      <input type="text" class="form-control input-sm m-b-xs" id="filter"
+             placeholder="Search Quotations">
+
+      <table class="footable table table-stripped toggle-arrow-tiny"
+        data-page-size="15" data-filter=#filter>
+        <thead>
+          <tr>
+            <th data-toggle="true"style="width: 25px;" data-filterable="true">Quote ID</th>
+            <th>Customer</th>
+            <th data-filterable="false">Date</th>
+            <th>Created By</th>
+            <th data-hide="all">Contact Name</th>
+            <th data-hide="all">Email</th>
+            <th data-hide="all">Reg Number</th>
+            <th data-hide="all" data-filterable="false">Billing Address 1</th>
+            <th data-hide="all" data-filterable="false">Billing Address 2</th>
+            <th data-hide="all" data-filterable="false">Billing Postal</th>
+            <th data-hide="all" data-filterable="false">Shipping Address 1</th>
+            <th data-hide="all" data-filterable="false">Shipping Address 2</th>
+            <th data-hide="all" data-filterable="false">Shipping Postal</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for quote in quote_pk %}
+          <tr>
+            <td>{{quote.id}}</td>
+            <td>{{quote.customer_name}}</td>
+            <td>{{quote.created_date}}</td>
+            <td>{{quote.created_by}}</td>
+            <td>{{quote.customer_name.contact}}</td>
+            <td>{{quote.customer_name.contact_email}}</td>
+            <td>{{quote.customer_name.business_reg_no}}</td>
+            <td>{{quote.customer_name.billing_address_1}}</td>
+            <td>{{quote.customer_name.billing_address_2}}</td>
+            <td>{{quote.customer_name.billing_postal}}</td>
+            <td>{{quote.shipping_address1}}</td>
+            <td>{{quote.shipping_address2}}</td>
+            <td>{{quote.shipping_postal}}</td>
+            <td><a href="{% url 'pdf_printer' quote.id %}" target="_blank"><i class="fa fa-eye"></i></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5">
+                <ul class="pagination pull-right"></ul>
+            </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

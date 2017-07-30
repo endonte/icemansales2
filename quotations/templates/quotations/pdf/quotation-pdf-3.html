@@ -12,14 +12,8 @@
     <th width="80" align="left">
       Price
     </th>
-    <th width="125" align="left">
+    <th width="80" align="left">
       UOM
-    </th>
-    <th width="70" align="right">
-      Qty
-    </th>
-    <th width="100" align="right">
-      Total
     </th>
   </tr>
   {% for item in quote_products %}
@@ -35,12 +29,6 @@
       </td>
       <td>
         {{item.product_name.uom}}
-      </td>
-      <td align="right">
-        {{item.product_quantity}}
-      </td>
-      <td align="right">
-        $ {{item.product_line_total}}
       </td>
     </tr>
 
@@ -60,31 +48,8 @@
 </table>
 {% endblock %}
 
-{% block total %}
-<table>
-  <tr>
-    <td align="right">
-      Subtotal
-    </td>
-    <td align="right" width="100">
-      $ {{quote_pk.quote_total}}
-    </td>
-  </tr>
-  <tr>
-    <td align="right">
-      GST Included (7%)
-    </td>
-    <td align="right" width="100">
-      $
-    </td>
-  </tr>
-  <tr>
-    <td align="right">
-      Grand Total
-    </td>
-    <td align="right">
-      $
-    </td>
-  </tr>
-</table>
-{% endblock total %}
+{% block tnc %}
+<p style="font-size: 8pt;">
+  2. GST is not included in the quoted prices.
+</p>
+{% endblock tnc %}

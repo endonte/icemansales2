@@ -40,8 +40,6 @@ DJANGO_APPS = [
 
     # Useful template tags:
     # 'django.contrib.humanize',
-    'dal',
-    'dal_select2',
     # Admin
     'django.contrib.admin',
 ]
@@ -52,6 +50,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     'django_tables2', # table
     'django_filters', # table filter
+    'django_select2', # dropdown menu with search
 ]
 
 # Apps specific for this project go here.

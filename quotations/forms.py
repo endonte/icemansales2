@@ -9,20 +9,26 @@ class QuoteForm(forms.ModelForm):
                 'shipping_address1',
                 'shipping_address2',
                 'shipping_postal',
-                'quote_total',
-                'quote_gst',
                 'template_type',
             )
-        #widgets = {
-        #    'template_type': RadioSelect,
-        #}
 
-class QuoteProductForm(forms.ModelForm):
+
+class QuoteProductForm1(forms.ModelForm):
     class Meta:
         model = Quote_Products
         fields = (
                 'product_name',
                 'product_price',
+                'product_description',
+        )
+
+class QuoteProductForm2(forms.ModelForm):
+    class Meta:
+        model = Quote_Products
+        fields = (
+                'product_name',
+                'product_price',
+                'product_quantity',
                 'product_description',
         )
 

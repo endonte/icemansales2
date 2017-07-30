@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load staticfiles %}
 <html>
 <head>
 <style>
@@ -6,7 +6,8 @@
   th {border-bottom: 1pt solid black;}
   hr {margin: 0.5;}
   p.separator { -pdf-keep-with-next: false; font-size: 6pt; }
-  td, th {font-size: 10pt; }
+  td, th {font-size: 9pt; }
+  table {padding-top: 2.3px;}
   @page {
     size: a4 portrait;
     @frame header_frame1 {           /* Static Frame */
@@ -35,21 +36,31 @@
     }
     @frame customer_details{
       -pdf-frame-content: customer_details;
-      left: 2cm; width: 5.67cm; top: 6.8cm; height: 3.8cm;
+      left: 2cm; width: 5.67cm; top: 6cm; height: 3.8cm;
       -pdf-frame-border: 1;
     }
     @frame billing_details{
       -pdf-frame-content: billing_details;
-      left: 7.67cm; width: 5.67cm; top: 6.8cm; height: 3.8cm;
+      left: 7.67cm; width: 5.67cm; top: 6cm; height: 3.8cm;
       -pdf-frame-border: 1;
     }
     @frame shipping_details{
       -pdf-frame-content: shipping_details;
-      left: 13.34cm; width: 5.67cm; top: 6.8cm; height: 3.8cm;
+      left: 13.34cm; width: 5.67cm; top: 6cm; height: 3.8cm;
       -pdf-frame-border: 1;
     }
     @frame content_frame {          /* Content Frame */
-      left: 2cm; width: 17cm; top: 10.8cm; height: 13.2cm;
+      left: 2cm; width: 17cm; top: 10cm; height: 11cm;
+      -pdf-frame-border: 1;
+    }
+    @frame total_frame {
+      -pdf-frame-content: total_content;
+      left: 2cm; width: 17cm; top: 21cm; height: 2cm;
+      -pdf-frame-border: 1;
+    }
+    @frame tnc_frame {
+      -pdf-frame-content: tnc_contents;
+      left: 2cm; width: 17cm; top: 23.2cm; height: 1.9cm;
       -pdf-frame-border: 1;
     }
     @frame creator_frame {
@@ -118,26 +129,6 @@
       {{quote_pk.created_date.date}}
     </p>
   </div>
-<!--  <div id="header_content5">
-    <p>
-      Tel: 6744 8484
-    </p>
-    <p>
-      Fax: 6744 5088
-    </p>
-    <p>
-      E: cs@iceman.com.sg
-    </p>
-    <p>
-      Website: Iceman.com.sg
-    </p>
-    <p>
-      Shop: Polarmart.com.sg
-    </p>
-    <p>
-      Fb: Facebook.com/SGIceman
-    </p>
-  </div>-->
   <div id="customer_details">
     <p>
       <strong>Customer Details:</strong>
@@ -217,7 +208,20 @@
   <!-- HTML Content -->
   {% block content %}
   {% endblock %}
-
+  <div id="total_content">
+    {% block total %}
+    {% endblock total %}
+  </div>
+  <div id="tnc_contents">
+    <p style="font-size: 8pt;">
+      <strong>Terms & Conditions</strong>
+    </p>
+    <p style="font-size: 8pt;">
+      1. Quotation Valid for 1 year
+    </p>
+    {% block tnc %}
+    {% endblock tnc %}
+  </div>
 
 </body>
 </html>

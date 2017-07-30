@@ -10,11 +10,9 @@
       </div>
       <div class="ibox-content">
 
-        <i class="fa fa-2x fa-fw fa-print"></i>
-        <a href="{% url 'pdf_printer' quote_pk.id %}">
+        <a href="{% url 'pdf_printer' quote_pk.id %}" target="_blank">
           <i class="fa fa-2x fa-fw fa-file-pdf-o"></i>
         </a>
-        <i class="fa fa-2x fa-fw fa-envelope-o"></i>
       </div>
     </div>
   </div>
@@ -103,6 +101,10 @@
                   <th>Product Name</th>
                   <th>UOM</th>
                   <th>Price</th>
+                  {% if quote_pk.template_type == 'T1' or quote_pk.template_type == 'T2' %}
+                    <th>Quantity</th>
+                    <th>Line Total</th>
+                  {% endif %}
                   <th>Additional Details</th>
                 </tr>
               </thead>
@@ -113,6 +115,10 @@
                     <td>{{object.product_name}}</td>
                     <td>{{object.product_name.uom}}</td>
                     <td>$ {{object.product_price}}</td>
+                    {% if quote_pk.template_type == 'T1' or quote_pk.template_type == 'T2' %}
+                      <td>{{object.product_quantity}}</td>
+                      <td>$ {{object.product_line_total}}</td>
+                    {% endif %}
                     <td style="width: 500px;">{{object.product_description}}</td>
                   </tr>
                 {% endfor %}
@@ -137,7 +143,7 @@
     </div>
   </div>
   <div class="col-lg-3">
-    
+
   </div>
   <div class="col-lg-3">
 

@@ -6,9 +6,6 @@ from sales.users.models import User
 from .forms import CustomerForm, LeadForm
 from .models import Customer
 
-# Create your views here.
-#def customer_list(request):
-#    return render(request, 'customers/customer_list.html', {})
 
 class CustomerListView(ListView, ModelFormMixin):
     model = Customer

@@ -1,4 +1,5 @@
 {% extends "base.html" %}{% load staticfiles %}
+{% load render_table from django_tables2 %}
 
 {% block css %}
 
@@ -26,25 +27,17 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-8">
-
-    <div class="row">
-      <div class="ibox float-e-margins">
-        <div class="ibox-title">
-          <h5>Filter Customers</h5>
-        </div>
-        <div class="ibox-content">
-
-        </div>
-      </div>
-    </div>
+  <div class="col-md-9">
     <div class="row">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
           <h5>Customer List</h5>
         </div>
         <div class="ibox-content">
-          <table class="footable table table-stripped toggle-arrow-tiny">
+          <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                 placeholder="Search Customers">
+          <table class="footable table table-stripped toggle-arrow-tiny"
+            data-page-size="15" data-filter=#filter>
             <thead>
               <tr>
                 <th data-toggle="true">Customer</th>
@@ -57,7 +50,7 @@
                 <th data-hide="all">Billing Postal</th>
                 <th data-hide="all">Created By</th>
                 <th>Owned By</th>
-                <th>View Quotation</th>
+                <th>View Quotes</th>
               </tr>
             </thead>
             <tbody>
@@ -89,7 +82,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="ibox float-e-margins">
       <div class="ibox-title">
         <h5>Add Customer</h5>

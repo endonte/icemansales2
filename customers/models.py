@@ -116,3 +116,6 @@ class Customer(models.Model):
         self.customer_created_by.add(*[request.User])
         self.customer_created_by_date = timezone.now()
         self.save()
+
+    def delete(self):
+        self
